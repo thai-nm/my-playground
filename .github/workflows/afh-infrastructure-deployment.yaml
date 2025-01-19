@@ -44,7 +44,8 @@ jobs:
         id: plan
         run: terraform plan -out=tfplan
 
-      - uses: trstringer/manual-approval@v1
+      - name: Review
+        uses: trstringer/manual-approval@v1
         with:
           secret: ${{ github.TOKEN }}
           approvers: thai-nm
