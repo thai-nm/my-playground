@@ -3,12 +3,6 @@ name: Terraform Provisioning for Azure
 on:
   workflow_dispatch:
 
-env:
-  ARM_CLIENT_ID: ${{ secrets.AZURE_CLIENT_ID }}
-  ARM_CLIENT_SECRET: ${{ secrets.AZURE_CLIENT_SECRET }}
-  ARM_SUBSCRIPTION_ID: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
-  ARM_TENANT_ID: ${{ secrets.AZURE_TENANT_ID }}
-
 jobs:
   terraform:
     name: Terraform Provisioning
@@ -19,6 +13,13 @@ jobs:
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
+
+      - name: Azure login
+        uses: azure/login@v2
+        with:
+          client-id: ${{ secrets.AZURE_CLIENT_ID }}
+          tenant-id: ${{ secrets.AZURE_TENANT_ID }}
+          subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
       - name: Set up Terraform
         uses: hashicorp/setup-terraform@v3
@@ -34,6 +35,15 @@ jobs:
       - name: Terraform Plan
         id: plan
         run: terraform plan -out=tfplan
+
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ github.TOKEN }}
+          approvers: thai-nm
+          minimum-approvals: 1
+          issue-title: "Provisioning infrastructure"
+          issue-body: "Please review Terraform plan."
+          exclude-workflow-initiator-as-approver: false
 
       - name: Terraform Apply
         if: github.ref == 'refs/heads/main'
