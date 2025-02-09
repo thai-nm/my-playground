@@ -10,13 +10,29 @@ resource "azurerm_storage_account" "afh" {
 }
 
 # resource "azurerm_storage_container" "afh" {
-#   name                  = "$web"  # Special container name for static websites
 #   storage_account_id    = azurerm_storage_account.afh.id
-#   container_access_type = "blob"  # Changed to allow public read access
+#   name                  = "$web" 
+#   container_access_type = "blob"
 # }
 
 resource "azurerm_storage_account_static_website" "afh" {
   storage_account_id = azurerm_storage_account.afh.id
   error_404_document = "404.html"
   index_document     = "index.html"
+}
+
+resource "azurerm_storage_blob" "index-html" {
+  storage_account_name   = azurerm_storage_account.afh.name
+  name                   = "index.html"
+  storage_container_name = "$web"
+  type                   = "Block"
+  source                 = abspath("../frontend/index.html")
+}
+
+resource "azurerm_storage_blob" "error-html" {
+  storage_account_name   = azurerm_storage_account.afh.name
+  name                   = "404.html"
+  storage_container_name = "$web"
+  type                   = "Block"
+  source                 = abspath("../frontend/404.html")
 }
