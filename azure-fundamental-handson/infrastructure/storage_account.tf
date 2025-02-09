@@ -9,12 +9,6 @@ resource "azurerm_storage_account" "afh" {
   allow_nested_items_to_be_public = true
 }
 
-# resource "azurerm_storage_container" "afh" {
-#   storage_account_id    = azurerm_storage_account.afh.id
-#   name                  = "$web" 
-#   container_access_type = "blob"
-# }
-
 resource "azurerm_storage_account_static_website" "afh" {
   storage_account_id = azurerm_storage_account.afh.id
   error_404_document = "error.html"
@@ -35,4 +29,20 @@ resource "azurerm_storage_blob" "error-html" {
   storage_container_name = "$web"
   type                   = "Block"
   source                 = abspath("../frontend/error.html")
+}
+
+resource "azurerm_storage_blob" "script-js" {
+  storage_account_name   = azurerm_storage_account.afh.name
+  name                   = "script.js"
+  storage_container_name = "$web"
+  type                   = "Block"
+  source                 = abspath("../frontend/script.js")
+}
+
+resource "azurerm_storage_blob" "style-css" {
+  storage_account_name   = azurerm_storage_account.afh.name
+  name                   = "style.css"
+  storage_container_name = "$web"
+  type                   = "Block"
+  source                 = abspath("../frontend/style.css")
 }
