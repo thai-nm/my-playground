@@ -44,7 +44,7 @@ resource "azurerm_storage_blob" "script-js" {
 
 resource "azurerm_storage_blob" "style-css" {
   storage_account_name   = azurerm_storage_account.afh.name
-  name                   = "style.css"
+  name                   = "styles.css"
   storage_container_name = "$web"
   type                   = "Block"
   content_type           = "text/css"
