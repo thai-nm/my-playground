@@ -44,5 +44,5 @@ resource "azurerm_storage_blob" "style-css" {
   name                   = "style.css"
   storage_container_name = "$web"
   type                   = "Block"
-  source                 = abspath("../frontend/style.css")
+  source                 = abspath("../frontend/styles.css")
 }
