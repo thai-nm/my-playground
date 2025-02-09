@@ -17,13 +17,13 @@ resource "azurerm_storage_account" "afh" {
 
 resource "azurerm_storage_account_static_website" "afh" {
   storage_account_id = azurerm_storage_account.afh.id
-  error_404_document = "404.html"
+  error_404_document = "error.html"
   index_document     = "index.html"
 }
 
 resource "azurerm_storage_blob" "index-html" {
   storage_account_name   = azurerm_storage_account.afh.name
-  name                   = "index.html"
+  name                   = azurerm_storage_account_static_website.afh.index_document
   storage_container_name = "$web"
   type                   = "Block"
   source                 = abspath("../frontend/index.html")
@@ -31,8 +31,8 @@ resource "azurerm_storage_blob" "index-html" {
 
 resource "azurerm_storage_blob" "error-html" {
   storage_account_name   = azurerm_storage_account.afh.name
-  name                   = "404.html"
+  name                   = azurerm_storage_account_static_website.afh.error_404_document
   storage_container_name = "$web"
   type                   = "Block"
-  source                 = abspath("../frontend/404.html")
+  source                 = abspath("../frontend/error.html")
 }
