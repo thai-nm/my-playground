@@ -6,11 +6,11 @@ terraform {
     }
   }
   backend "azurerm" {
-      resource_group_name  = "misc"
-      storage_account_name = "thainmtfstate"
-      container_name       = "tfstate"
-      key                  = "terraform.tfstate"
-      use_oidc             = true
+    resource_group_name  = "misc"
+    storage_account_name = "thainmtfstate"
+    container_name       = "tfstate"
+    key                  = "terraform.tfstate"
+    use_oidc             = true
   }
 }
 

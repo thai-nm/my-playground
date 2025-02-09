@@ -20,6 +20,7 @@ resource "azurerm_storage_blob" "index-html" {
   name                   = azurerm_storage_account_static_website.afh.index_document
   storage_container_name = "$web"
   type                   = "Block"
+  content_type           = "text/html"
   source                 = abspath("../frontend/index.html")
 }
 
@@ -28,6 +29,7 @@ resource "azurerm_storage_blob" "error-html" {
   name                   = azurerm_storage_account_static_website.afh.error_404_document
   storage_container_name = "$web"
   type                   = "Block"
+  content_type           = "text/html"
   source                 = abspath("../frontend/error.html")
 }
 
@@ -36,6 +38,7 @@ resource "azurerm_storage_blob" "script-js" {
   name                   = "script.js"
   storage_container_name = "$web"
   type                   = "Block"
+  content_type           = "application/javascript"
   source                 = abspath("../frontend/script.js")
 }
 
@@ -44,5 +47,6 @@ resource "azurerm_storage_blob" "style-css" {
   name                   = "style.css"
   storage_container_name = "$web"
   type                   = "Block"
+  content_type           = "text/css"
   source                 = abspath("../frontend/styles.css")
 }
