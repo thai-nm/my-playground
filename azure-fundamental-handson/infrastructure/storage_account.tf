@@ -7,6 +7,7 @@ resource "azurerm_storage_account" "afh" {
 
   # Allow blob public access
   allow_nested_items_to_be_public = true
+  https_traffic_only_enabled      = false
 }
 
 resource "azurerm_storage_account_static_website" "afh" {
