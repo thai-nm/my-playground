@@ -43,3 +43,21 @@ resource "azurerm_subnet_network_security_group_association" "private" {
   subnet_id                 = azurerm_subnet.private.id
   network_security_group_id = azurerm_network_security_group.private.id
 }
+
+resource "azurerm_public_ip" "feedback_app" {
+  name                = "FeedbackAppPublicIP"
+  location            = azurerm_resource_group.afh.location
+  resource_group_name = azurerm_resource_group.afh.name
+  allocation_method   = "Static"
+}
+
+resource "azurerm_lb" "public" {
+  name                = "FeedbackApp"
+  location            = azurerm_resource_group.afh.location
+  resource_group_name = azurerm_resource_group.afh.name
+
+  frontend_ip_configuration {
+    name                 = "FeedbackAppPublicIP"
+    public_ip_address_id = azurerm_public_ip.feedback_app.id
+  }
+}
