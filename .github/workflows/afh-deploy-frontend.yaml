@@ -16,7 +16,7 @@ env:
 jobs:
   upload:
     runs-on: ubuntu-latest
-    
+    name: Deploy Frontend
     steps:
       - name: Checkout Code
         uses: actions/checkout@v3
@@ -33,4 +33,8 @@ jobs:
         with:
           inlineScript: |
             ls -la
-            az storage blob upload-batch -s frontend -d '$web' --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} --auth-mode login
+            az storage blob upload-batch \
+            --source ./azure-fundamental-handson/frontend \
+            --destination ${{ env.CONTAINER_NAME }} \
+            --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} \
+            --auth-mode login
