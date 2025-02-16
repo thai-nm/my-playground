@@ -19,6 +19,13 @@ resource "azurerm_subnet" "private" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
+resource "azurerm_subnet" "bastion" {
+  name                 = "AzureBastionSubnet"
+  resource_group_name  = azurerm_resource_group.afh.name
+  virtual_network_name = azurerm_virtual_network.afh.name
+  address_prefixes     = ["10.0.3.0/24"]
+}
+
 resource "azurerm_network_security_group" "private" {
   name                = "private-nsg"
   location            = azurerm_resource_group.afh.location
@@ -60,4 +67,11 @@ resource "azurerm_lb" "public" {
     name                 = "FeedbackAppPublicIP"
     public_ip_address_id = azurerm_public_ip.feedback-app.id
   }
+}
+
+resource "azurerm_public_ip" "feedback-app-bastion" {
+  name                = "FeedbackAppBastionPublicIP"
+  resource_group_name = azurerm_resource_group.afh.name
+  location            = azurerm_resource_group.afh.location
+  allocation_method   = "Dynamic"
 }
