@@ -35,6 +35,6 @@ jobs:
             ls -la
             az storage blob upload-batch \
             --source ./azure-fundamental-handson/frontend \
-            --destination ${{ env.CONTAINER_NAME }} \
-            --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} \
+            --destination '${{ env.CONTAINER_NAME }}' \
+            --account-name '${{ env.AZURE_STORAGE_ACCOUNT }}' \
             --auth-mode login
