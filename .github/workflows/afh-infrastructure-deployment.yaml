@@ -2,6 +2,12 @@ name: Terraform Provisioning for Azure
 
 on:
   workflow_dispatch:
+    inputs:
+      destroy:
+        description: 'Destroy infrastructure'
+        type: boolean
+        required: true
+        default: false
 
 permissions:
   id-token: write
@@ -45,8 +51,14 @@ jobs:
         run: terraform validate
 
       - name: Terraform Plan
+        if: inputs.destroy == false
         id: plan
         run: terraform plan -out=tfplan
+
+      - name: Terraform Plan Destroy
+        if: inputs.destroy == true
+        id: plan-destroy
+        run: terraform plan -destroy -out=tfplan
 
       - name: Review
         uses: trstringer/manual-approval@v1
@@ -54,10 +66,14 @@ jobs:
           secret: ${{ github.TOKEN }}
           approvers: thai-nm
           minimum-approvals: 1
-          issue-title: "Provisioning infrastructure"
-          issue-body: "Please review Terraform plan."
+          issue-title: "${{ inputs.destroy && 'Destroying' || 'Provisioning' }} infrastructure"
+          issue-body: "Please review Terraform ${{ inputs.destroy && 'destroy' || '' }} plan."
           exclude-workflow-initiator-as-approver: false
 
       - name: Terraform Apply
-        if: github.ref == 'refs/heads/main'
+        if: github.ref == 'refs/heads/main' && inputs.destroy == false
+        run: terraform apply -auto-approve tfplan
+
+      - name: Terraform Destroy
+        if: github.ref == 'refs/heads/main' && inputs.destroy == true
         run: terraform apply -auto-approve tfplan
