@@ -1,6 +1,6 @@
 locals {
   project            = "afh"
-  location           = "Southeast Asia"
+  location           = "Central US"
   cloudflare_zone_id = "ae3afeae2c316d39789d08c3bf022c28"
 }
 

@@ -23,7 +23,7 @@ env:
 
 jobs:
   terraform:
-    name: Terraform Provisioning
+    name: Terraform Management
     runs-on: ubuntu-latest
     defaults:
       run:
