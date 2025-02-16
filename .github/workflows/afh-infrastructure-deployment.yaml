@@ -1,4 +1,4 @@
-name: Terraform Provisioning for Azure
+name: AFH - Terraform Management
 
 on:
   workflow_dispatch:
