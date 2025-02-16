@@ -37,4 +37,5 @@ jobs:
             --source ./azure-fundamental-handson/frontend \
             --destination '${{ env.CONTAINER_NAME }}' \
             --account-name '${{ env.AZURE_STORAGE_ACCOUNT }}' \
-            --auth-mode login
+            --auth-mode login \
+            --overwrite
