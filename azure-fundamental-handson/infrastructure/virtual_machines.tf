@@ -5,12 +5,6 @@ resource "azurerm_bastion_host" "feedback-app" {
 
   sku                = "Developer"
   virtual_network_id = azurerm_virtual_network.vnet.id
-
-  ip_configuration {
-    name                 = "feedback-app-bastion-ip"
-    subnet_id            = azurerm_subnet.bastion.id
-    public_ip_address_id = azurerm_public_ip.feedback-app-bastion.id
-  }
 }
 
 resource "azurerm_network_interface" "feedback-app" {
