@@ -16,38 +16,38 @@ resource "azurerm_storage_account_static_website" "afh" {
   index_document     = "index.html"
 }
 
-resource "azurerm_storage_blob" "index-html" {
-  storage_account_name   = azurerm_storage_account.afh.name
-  name                   = azurerm_storage_account_static_website.afh.index_document
-  storage_container_name = "$web"
-  type                   = "Block"
-  content_type           = "text/html"
-  source                 = abspath("../frontend/index.html")
-}
+# resource "azurerm_storage_blob" "index-html" {
+#   storage_account_name   = azurerm_storage_account.afh.name
+#   name                   = azurerm_storage_account_static_website.afh.index_document
+#   storage_container_name = "$web"
+#   type                   = "Block"
+#   content_type           = "text/html"
+#   source                 = abspath("../frontend/index.html")
+# }
 
-resource "azurerm_storage_blob" "error-html" {
-  storage_account_name   = azurerm_storage_account.afh.name
-  name                   = azurerm_storage_account_static_website.afh.error_404_document
-  storage_container_name = "$web"
-  type                   = "Block"
-  content_type           = "text/html"
-  source                 = abspath("../frontend/error.html")
-}
+# resource "azurerm_storage_blob" "error-html" {
+#   storage_account_name   = azurerm_storage_account.afh.name
+#   name                   = azurerm_storage_account_static_website.afh.error_404_document
+#   storage_container_name = "$web"
+#   type                   = "Block"
+#   content_type           = "text/html"
+#   source                 = abspath("../frontend/error.html")
+# }
 
-resource "azurerm_storage_blob" "script-js" {
-  storage_account_name   = azurerm_storage_account.afh.name
-  name                   = "script.js"
-  storage_container_name = "$web"
-  type                   = "Block"
-  content_type           = "application/javascript"
-  source                 = abspath("../frontend/script.js")
-}
+# resource "azurerm_storage_blob" "script-js" {
+#   storage_account_name   = azurerm_storage_account.afh.name
+#   name                   = "script.js"
+#   storage_container_name = "$web"
+#   type                   = "Block"
+#   content_type           = "application/javascript"
+#   source                 = abspath("../frontend/script.js")
+# }
 
-resource "azurerm_storage_blob" "style-css" {
-  storage_account_name   = azurerm_storage_account.afh.name
-  name                   = "styles.css"
-  storage_container_name = "$web"
-  type                   = "Block"
-  content_type           = "text/css"
-  source                 = abspath("../frontend/styles.css")
-}
+# resource "azurerm_storage_blob" "style-css" {
+#   storage_account_name   = azurerm_storage_account.afh.name
+#   name                   = "styles.css"
+#   storage_container_name = "$web"
+#   type                   = "Block"
+#   content_type           = "text/css"
+#   source                 = abspath("../frontend/styles.css")
+# }

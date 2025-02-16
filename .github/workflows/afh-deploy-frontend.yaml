@@ -1,4 +1,4 @@
-name: Upload Frontend to Azure Blob Storage
+name: AFH - Deploy Frontend
 
 on:
   workflow_dispatch:
