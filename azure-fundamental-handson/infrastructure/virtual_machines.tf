@@ -22,7 +22,7 @@ resource "azurerm_linux_virtual_machine" "feedback-app" {
 
   admin_ssh_key {
     username   = "lucas"
-    public_key = file("./ssh/id_rsa.pub")
+    public_key = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAZN69eGNrS+mYAph2Bty3jjHvKtvrscISAoM93mc3eo"
   }
 
   os_disk {
