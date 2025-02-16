@@ -25,7 +25,7 @@ resource "azurerm_network_security_group" "private" {
   resource_group_name = azurerm_resource_group.afh.name
 }
 
-resource "azurerm_network_security_rule" "allow_http_inbound" {
+resource "azurerm_network_security_rule" "allow-http-inbound" {
   name                         = "OnlyAllowHttpInbound"
   priority                     = 100
   direction                    = "Inbound"
@@ -44,7 +44,7 @@ resource "azurerm_subnet_network_security_group_association" "private" {
   network_security_group_id = azurerm_network_security_group.private.id
 }
 
-resource "azurerm_public_ip" "feedback_app" {
+resource "azurerm_public_ip" "feedback-app" {
   name                = "FeedbackAppPublicIP"
   location            = azurerm_resource_group.afh.location
   resource_group_name = azurerm_resource_group.afh.name
