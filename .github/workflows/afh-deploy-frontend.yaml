@@ -32,8 +32,5 @@ jobs:
         uses: azure/CLI@v1
         with:
           inlineScript: |
-            az storage blob upload-batch \
-              --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} \
-              --auth-mode login \
-              --destination ${{ env.CONTAINER_NAME }} \
-              --source ./frontend  
+            ls -la
+            az storage blob upload-batch -s frontend -d '$web' --account-name ${{ env.AZURE_STORAGE_ACCOUNT }} --auth-mode login
