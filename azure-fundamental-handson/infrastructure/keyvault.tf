@@ -5,20 +5,19 @@ resource "azurerm_key_vault" "afh" {
   tenant_id           = local.tenant_id
   sku_name            = "standard"
 
-  #   access_policy {
-  #     tenant_id = data.azurerm_client_config.current.tenant_id
-  #     object_id = data.azurerm_client_config.current.object_id
+  access_policy {
+    tenant_id = local.tenant_id
+    object_id = local.owner_principle.object_id
 
-  #     key_permissions = [
-  #       "Get",
-  #     ]
-
-  #     secret_permissions = [
-  #       "Get",
-  #     ]
-
-  #     storage_permissions = [
-  #       "Get",
-  #     ]
-  #   }
+    secret_permissions = [
+      "Backup",
+      "Delete",
+      "Get",
+      "List",
+      "Purge",
+      "Recover",
+      "Restore",
+      "Set"
+    ]
+  }
 }
