@@ -1,3 +1,4 @@
+# Virtual Network
 resource "azurerm_virtual_network" "vnet" {
   name                = "${local.project}-vnet"
   resource_group_name = azurerm_resource_group.afh.name
@@ -19,6 +20,7 @@ resource "azurerm_subnet" "private" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
+# Bastion 
 resource "azurerm_subnet" "bastion" {
   name                 = "AzureBastionSubnet"
   resource_group_name  = azurerm_resource_group.afh.name
@@ -26,6 +28,7 @@ resource "azurerm_subnet" "bastion" {
   address_prefixes     = ["10.0.3.0/24"]
 }
 
+# Network Security Group
 resource "azurerm_network_security_group" "private" {
   name                = "private-nsg"
   location            = azurerm_resource_group.afh.location
@@ -51,6 +54,7 @@ resource "azurerm_subnet_network_security_group_association" "private" {
   network_security_group_id = azurerm_network_security_group.private.id
 }
 
+# Load Balancer
 resource "azurerm_public_ip" "feedback-app" {
   name                = "FeedbackAppPublicIP"
   location            = azurerm_resource_group.afh.location
@@ -67,4 +71,32 @@ resource "azurerm_lb" "public" {
     name                 = "FeedbackAppPublicIP"
     public_ip_address_id = azurerm_public_ip.feedback-app.id
   }
+}
+
+resource "azurerm_lb_backend_address_pool" "feedback-app" {
+  loadbalancer_id = azurerm_lb.public.id
+  name            = "FeedbackAppBackendPool"
+}
+
+resource "azurerm_network_interface_backend_address_pool_association" "feedback-app" {
+  network_interface_id    = azurerm_network_interface.feedback-app.id
+  ip_configuration_name   = "internal"
+  backend_address_pool_id = azurerm_lb_backend_address_pool.feedback-app.id
+}
+
+resource "azurerm_lb_probe" "feedback-app" {
+  loadbalancer_id = azurerm_lb.public.id
+  name            = "http-running-probe"
+  port            = 80
+}
+
+resource "azurerm_lb_rule" "feedback-app" {
+  loadbalancer_id                = azurerm_lb.public.id
+  name                           = "http"
+  protocol                       = "Tcp"
+  frontend_port                  = 80
+  backend_port                   = 80
+  frontend_ip_configuration_name = "FeedbackAppPublicIP"
+  backend_address_pool_ids       = [azurerm_lb_backend_address_pool.feedback-app.id]
+  probe_id                       = azurerm_lb_probe.feedback-app.id
 }
