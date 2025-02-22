@@ -20,11 +20,18 @@ resource "azurerm_subnet" "private" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
+resource "azurerm_subnet" "bastion" {
+  name                 = "AzureBastionSubnet"
+  resource_group_name  = azurerm_resource_group.afh.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.3.0/24"]
+}
+
 resource "azurerm_subnet" "delegated-flexible-server-postgresql" {
   name                 = "${local.project}-delegated-subnet-flexible-server-postgresql"
   resource_group_name  = azurerm_resource_group.afh.name
   virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.3.0/24"]
+  address_prefixes     = ["10.0.4.0/24"]
   service_endpoints    = ["Microsoft.Storage"]
   delegation {
     name = "fs"
@@ -35,14 +42,6 @@ resource "azurerm_subnet" "delegated-flexible-server-postgresql" {
       ]
     }
   }
-}
-
-# Bastion 
-resource "azurerm_subnet" "bastion" {
-  name                 = "AzureBastionSubnet"
-  resource_group_name  = azurerm_resource_group.afh.name
-  virtual_network_name = azurerm_virtual_network.vnet.name
-  address_prefixes     = ["10.0.3.0/24"]
 }
 
 # Network Security Group
