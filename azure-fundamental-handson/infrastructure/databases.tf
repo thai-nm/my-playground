@@ -5,7 +5,7 @@ resource "azurerm_postgresql_flexible_server" "example" {
   resource_group_name           = azurerm_resource_group.afh.name
   location                      = azurerm_resource_group.afh.location
   version                       = "16"
-  delegated_subnet_id           = azurerm_subnet.delegated-flexible-server-postgresql
+  delegated_subnet_id           = azurerm_subnet.delegated-flexible-server-postgresql.id
   private_dns_zone_id           = azurerm_private_dns_zone.flexible-server-postgresql.id
   public_network_access_enabled = false
   administrator_login           = "dbadmin"
