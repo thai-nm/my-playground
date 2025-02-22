@@ -1,5 +1,3 @@
-
-
 resource "azurerm_postgresql_flexible_server" "afh" {
   name                          = "afh-postgresql"
   resource_group_name           = azurerm_resource_group.afh.name
@@ -10,7 +8,6 @@ resource "azurerm_postgresql_flexible_server" "afh" {
   public_network_access_enabled = false
   administrator_login           = "dbadmin"
   administrator_password        = "dbadmin@25879"
-  zone                          = "1"
 
   storage_mb   = 32768
   storage_tier = "P4"
