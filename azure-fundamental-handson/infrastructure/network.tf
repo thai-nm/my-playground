@@ -120,7 +120,7 @@ resource "azurerm_lb_rule" "feedback-app" {
 
 # Private DNS Zone
 resource "azurerm_private_dns_zone" "flexible-server-postgresql" {
-  name                = "afh.postgres.database.azure.com."
+  name                = "afh.postgres.database.azure.com"
   resource_group_name = azurerm_resource_group.afh.name
 }
 
