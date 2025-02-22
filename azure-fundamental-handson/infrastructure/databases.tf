@@ -1,6 +1,6 @@
 
 
-resource "azurerm_postgresql_flexible_server" "example" {
+resource "azurerm_postgresql_flexible_server" "afh" {
   name                          = "afh-postgresql"
   resource_group_name           = azurerm_resource_group.afh.name
   location                      = azurerm_resource_group.afh.location
