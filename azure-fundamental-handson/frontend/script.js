@@ -14,7 +14,7 @@ document.addEventListener("DOMContentLoaded", () => {
     };
 
     try {
-      const response = await fetch("http://localhost:3000/feedbacks", {
+      const response = await fetch("https://api.thainm-playground.site/feedbacks", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
