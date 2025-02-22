@@ -36,7 +36,7 @@ resource "azurerm_linux_virtual_machine" "feedback-app" {
 
   os_disk {
     caching              = "ReadWrite"
-    storage_account_type = "StandardSSD_LRS"
+    storage_account_type = "Premium_LRS"
   }
 
   source_image_reference {
