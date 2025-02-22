@@ -20,6 +20,23 @@ resource "azurerm_subnet" "private" {
   address_prefixes     = ["10.0.2.0/24"]
 }
 
+resource "azurerm_subnet" "delegated-flexible-server-postgresql" {
+  name                 = "${local.project}-delegated-subnet-flexible-server-postgresql"
+  resource_group_name  = azurerm_resource_group.afh.name
+  virtual_network_name = azurerm_virtual_network.vnet.name
+  address_prefixes     = ["10.0.3.0/24"]
+  service_endpoints    = ["Microsoft.Storage"]
+  delegation {
+    name = "fs"
+    service_delegation {
+      name = "Microsoft.DBforPostgreSQL/flexibleServers"
+      actions = [
+        "Microsoft.Network/virtualNetworks/subnets/join/action",
+      ]
+    }
+  }
+}
+
 # Bastion 
 resource "azurerm_subnet" "bastion" {
   name                 = "AzureBastionSubnet"
@@ -99,4 +116,19 @@ resource "azurerm_lb_rule" "feedback-app" {
   frontend_ip_configuration_name = "FeedbackAppPublicIP"
   backend_address_pool_ids       = [azurerm_lb_backend_address_pool.feedback-app.id]
   probe_id                       = azurerm_lb_probe.feedback-app.id
+}
+
+
+# Private DNS Zone
+resource "azurerm_private_dns_zone" "flexible-server-postgresql" {
+  name                = "private.postgres.afh.com"
+  resource_group_name = azurerm_resource_group.afh.name
+}
+
+resource "azurerm_private_dns_zone_virtual_network_link" "flexible-server-postgresql" {
+  name                  = "private.postgres.afh.com"
+  private_dns_zone_name = azurerm_private_dns_zone.flexible-server-postgresql.name
+  virtual_network_id    = azurerm_virtual_network.vnet.id
+  resource_group_name   = azurerm_resource_group.afh.name
+  depends_on            = [azurerm_subnet.delegated-flexible-server-postgresql]
 }
