@@ -18,6 +18,9 @@ func ConnectDB() error {
     if err != nil {
         return err
     }
+
+    println("Connected to MongoDB!")
+    
     Client = client
     return nil
 }
