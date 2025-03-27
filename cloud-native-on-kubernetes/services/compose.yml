@@ -11,6 +11,8 @@ services:
       - "27017:27017"
     volumes:
       - mongo_data:/data/db
+    networks:
+      - kong-network
 
   user-service:
     build: ./user-service
@@ -26,6 +28,8 @@ services:
     volumes:
       - ./user-service:/app
     command: ["./user-service"]
+    networks:
+      - kong-network
 
   kong-database:
     image: postgres:13
@@ -39,26 +43,56 @@ services:
       - "5432:5432"
     volumes:
       - kong_data:/var/lib/postgresql/data
+    networks:
+      - kong-network
 
-  kong:
-    image: kong:3.9.0
-    container_name: kong
-    restart: always
+  kong-migrations:
+    image: kong-gateway:3.9-debian
+    container_name: kong-migrations
     depends_on:
       - kong-database
+    command: kong migrations bootstrap -c $KONG_DECLARATIVE_CONFIG
     environment:
       KONG_DATABASE: postgres
       KONG_PG_HOST: kong-database
       KONG_PG_USER: kong
       KONG_PG_PASSWORD: kong
-      # KONG_CASSANDRA_CONTACT_POINTS: kong-database
+      KONG_DECLARATIVE_CONFIG: "/usr/local/kong/declarative/kong.yml"
+    volumes:
+      - ./kong/kong.yml:/usr/local/kong/declarative/kong.yml
+    networks:
+      - kong-network
+    restart: "no"
+
+  kong:
+    image: kong-gateway:3.9-debian
+    container_name: kong
+    restart: always
+    depends_on:
+      - kong-database
+      - kong-migrations
+    environment:
+      KONG_DATABASE: postgres
+      KONG_PG_HOST: kong-database
+      KONG_PG_USER: kong
+      KONG_PG_PASSWORD: kong
+      KONG_DECLARATIVE_CONFIG: "/usr/local/kong/declarative/kong.yml"
     ports:
       - "8000:8000"
       - "8443:8443"
       - "8001:8001"
       - "8444:8444"
-    command: "kong migrations bootstrap && kong start"
+      - "8002:8002"
+    command: "kong start"
+    volumes:
+      - ./kong/kong.yml:/usr/local/kong/declarative/kong.yml
+    networks:
+      - kong-network
 
 volumes:
   mongo_data:
   kong_data:
+
+networks:
+  kong-network:
+    driver: bridge

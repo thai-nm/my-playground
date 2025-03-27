@@ -1,0 +1,26 @@
+_format_version: "3.0"
+
+services:
+  - name: user-service
+    url: http://user-service:8080
+    routes:
+      - name: user-service-route
+        paths:
+          - /users
+        strip_path: true
+
+  - name: note-service
+    url: http://note-service:8081
+    routes:
+      - name: note-service-route
+        paths:
+          - /notes
+        strip_path: false
+
+  - name: sharing-service
+    url: http://sharing-service:8082
+    routes:
+      - name: sharing-service-route
+        paths:
+          - /sharing
+        strip_path: false
