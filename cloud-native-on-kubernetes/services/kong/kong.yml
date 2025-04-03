@@ -11,3 +11,21 @@ services:
     paths:
     - /user-service
     strip_path: true
+
+plugins:
+- name: jwt
+  service: user-service
+  enabled: true
+  config:
+    key_claim_name: kid
+    claims_to_verify:
+    - exp
+
+consumers:
+- username: admin
+
+jwt_secrets:
+- consumer: admin
+  algorithm: HS256
+  secret: 9D6DA3B7-5634-4FFB-A9A0-2CA14248A378
+c

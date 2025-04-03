@@ -1,7 +1,8 @@
 FROM golang:1.23.7-bookworm AS builder
 WORKDIR /app
 COPY . .
-RUN go mod tidy && go build -o user-service
+RUN go mod tidy
+RUN go build -o user-service
 
 FROM debian:bookworm
 WORKDIR /root/
