@@ -7,6 +7,7 @@ import (
 
 	"user-service/db"
 	"user-service/models"
+	"user-service/utils"
 
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/bson"
@@ -83,15 +84,75 @@ func GetProfile(c *gin.Context) {
 		return
 	}
 
-	ctx := context.Background()
-	filter := bson.M{"email": "test@example.com"}
-	var result bson.M
+	// Get email from the JWT token (set by AuthMiddleware)
+	email, exists := c.Get("username")
+	if !exists {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not authenticated"})
+		return
+	}
 
-	err := userCollection.FindOne(ctx, filter).Decode(&result)
+	ctx := context.Background()
+	filter := bson.M{"email": email}
+	var user models.User
+
+	err := userCollection.FindOne(ctx, filter).Decode(&user)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "User not found"})
 		return
 	}
 
-	c.JSON(http.StatusOK, result)
+	// Return user data without sensitive information
+	c.JSON(http.StatusOK, gin.H{
+		"id":    user.ID,
+		"email": user.Email,
+		"name":  user.Name,
+	})
+}
+
+func LoginUser(c *gin.Context) {
+	// Create a struct to receive the login request
+	var loginRequest struct {
+		Email    string `json:"email"`
+		Password string `json:"password"`
+	}
+
+	if err := c.BindJSON(&loginRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid request"})
+		return
+	}
+
+	// Find user by email
+	var user models.User
+	ctx := context.Background()
+	err := userCollection.FindOne(ctx, bson.M{"email": loginRequest.Email}).Decode(&user)
+	if err != nil {
+		if err == mongo.ErrNoDocuments {
+			c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+			return
+		}
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to fetch user"})
+		return
+	}
+
+	// Verify password
+	if !utils.CheckPasswordHash(loginRequest.Password, user.PasswordHash) {
+		c.JSON(http.StatusUnauthorized, gin.H{"error": "Invalid credentials"})
+		return
+	}
+
+	// Generate JWT token
+	token, err := utils.GenerateToken(user.Email)
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to generate token"})
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{
+		"token": token,
+		"user": gin.H{
+			"id":    user.ID,
+			"email": user.Email,
+			"name":  user.Name,
+		},
+	})
 }

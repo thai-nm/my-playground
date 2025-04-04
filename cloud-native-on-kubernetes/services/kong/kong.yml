@@ -28,4 +28,3 @@ jwt_secrets:
 - consumer: admin
   algorithm: HS256
   secret: 9D6DA3B7-5634-4FFB-A9A0-2CA14248A378
-c
