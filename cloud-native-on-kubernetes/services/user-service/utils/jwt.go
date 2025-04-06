@@ -1,8 +1,10 @@
 package utils
 
 import (
-	"github.com/golang-jwt/jwt/v4"
+	"os"
 	"time"
+
+	"github.com/golang-jwt/jwt/v4"
 )
 
 type Claims struct {
@@ -10,13 +12,14 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
-var jwtKey = []byte("my_secret_key")
+var jwtKey = []byte(os.Getenv("JWT_SECRET_KEY"))
 
 func GenerateToken(username string) (string, error) {
 	expirationTime := time.Now().Add(24 * time.Hour)
 	claims := &Claims{
 		Username: username,
 		RegisteredClaims: jwt.RegisteredClaims{
+			Issuer:    "NoteAppUserService",
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
 	}

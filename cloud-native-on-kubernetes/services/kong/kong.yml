@@ -25,6 +25,11 @@ services:
         - DELETE
       plugins:
         - name: jwt
+          enabled: true
+          config:
+            # key_claim_name: iss
+            claims_to_verify:
+            - exp
       strip_path: true
 
 # plugins:
@@ -37,8 +42,12 @@ services:
 
 consumers:
 - username: admin
+- username: developer
 
 jwt_secrets:
 - consumer: admin
   algorithm: HS256
   secret: 9D6DA3B7-5634-4FFB-A9A0-2CA14248A378
+- consumer: developer
+  algorithm: HS256
+  secret: C7A20B51-A361-4E49-B132-1CD48E3169C5

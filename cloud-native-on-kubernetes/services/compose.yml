@@ -23,6 +23,7 @@ services:
     environment:
       - MONGO_URI=mongodb://root:localexample@mongo:27017/
       - MONGO_HOST=mongo
+      - JWT_SECRET_KEY=C7A20B51-A361-4E49-B132-1CD48E3169C5
     ports:
       - "8080:8080"
     volumes:
