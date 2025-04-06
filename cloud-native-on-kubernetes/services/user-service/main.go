@@ -22,7 +22,7 @@ func main() {
 	controllers.InitUserController()
 
 	r := gin.Default()
-	routes.RegisterRoutes(r)
+	routes.UserRoutes(r)
 
 	r.Run(":8080")
 }
