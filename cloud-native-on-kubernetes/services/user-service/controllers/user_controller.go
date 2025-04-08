@@ -79,12 +79,7 @@ func RegisterUser(c *gin.Context) {
 }
 
 func GetProfile(c *gin.Context) {
-	if userCollection == nil {
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Database not initialized"})
-		return
-	}
-
-	// Get email from the JWT token (set by AuthMiddleware)
+	// Get email from the JWT token
 	email, exists := c.Get("username")
 	if !exists {
 		c.JSON(http.StatusUnauthorized, gin.H{"error": "User not authenticated"})
@@ -105,7 +100,7 @@ func GetProfile(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{
 		"id":    user.ID,
 		"email": user.Email,
-		"name":  user.Name,
+		"username":  user.Username,
 	})
 }
 

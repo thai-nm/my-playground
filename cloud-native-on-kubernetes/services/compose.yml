@@ -23,12 +23,13 @@ services:
     environment:
       - MONGO_URI=mongodb://root:localexample@mongo:27017/
       - MONGO_HOST=mongo
-      - JWT_SECRET_KEY=C7A20B51-A361-4E49-B132-1CD48E3169C5
+      - JWT_ISSUER=note-app-user-service
+      - JWT_SECRET_KEY=EFBF13B3-1D6F-4EF8-95FE-C71784B835F5
     ports:
       - "8080:8080"
     volumes:
       - ./user-service:/app
-    command: ["./user-service"]
+    # command: ["./user-service"]
     networks:
       - kong-network
 
@@ -51,7 +52,6 @@ services:
       - "8001:8001"
       - "8444:8444"
       - "8002:8002"
-    # command: "kong migrations up && kong start"
     volumes:
       - ./kong/kong.yml:/usr/local/kong/declarative/kong.yml
     networks:

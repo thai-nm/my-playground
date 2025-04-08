@@ -12,6 +12,7 @@ type Claims struct {
 	jwt.RegisteredClaims
 }
 
+var jwtIssuer = os.Getenv("JWT_ISSUER")
 var jwtKey = []byte(os.Getenv("JWT_SECRET_KEY"))
 
 func GenerateToken(username string) (string, error) {
@@ -19,7 +20,7 @@ func GenerateToken(username string) (string, error) {
 	claims := &Claims{
 		Username: username,
 		RegisteredClaims: jwt.RegisteredClaims{
-			Issuer:    "NoteAppUserService",
+			Issuer:    jwtIssuer,
 			ExpiresAt: jwt.NewNumericDate(expirationTime),
 		},
 	}
