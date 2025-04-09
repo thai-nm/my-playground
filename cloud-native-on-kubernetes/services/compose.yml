@@ -29,7 +29,22 @@ services:
       - "8080:8080"
     volumes:
       - ./user-service:/app
-    # command: ["./user-service"]
+    networks:
+      - kong-network
+
+  note-service:
+    build: ./note-service
+    container_name: note-service
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      - MONGODB_URI=mongodb://root:localexample@mongo:27017/note-service
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./note-service:/app
     networks:
       - kong-network
 
