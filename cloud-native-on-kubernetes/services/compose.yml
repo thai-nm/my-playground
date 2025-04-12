@@ -41,6 +41,8 @@ services:
     environment:
       - MONGO_URI=mongodb://root:localexample@mongo:27017
       - NODE_ENV=production
+      - SERVICE_NAME=note-service
+      - JWT_SECRET=EFBF13B3-1D6F-4EF8-95FE-C71784B835F5
     command: ["npm", "run", "dev"]
     ports:
       - "3000:3000"

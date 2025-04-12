@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const path = require('path');
 const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const cors = require('cors');
@@ -22,7 +21,8 @@ app.use(cookieParser());
 app.use(cors());
 
 // Routes
-app.use('/notes', notesRouter);
+app.use(`/${process.env.SERVICE_NAME}/notes`, notesRouter);
+// app.use('/note-service/notes', notesRouter);
 
 // Error handling
 app.use((err, req, res, next) => {
