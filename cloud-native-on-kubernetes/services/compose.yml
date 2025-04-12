@@ -73,6 +73,18 @@ services:
     networks:
       - kong-network
 
+  portal:
+    build:
+      context: ./portal
+    ports:
+      - "80:80"
+    depends_on:
+      - kong
+      - user-service
+      - note-service
+    networks:
+      - kong-network
+
 volumes:
   mongo_data:
 
