@@ -11,7 +11,7 @@ const notesRouter = require('./routes/notes');
 const app = express();
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI)
+mongoose.connect(process.env.MONGO_URI)
   .then(() => console.log('Connected to MongoDB'))
   .catch(err => console.error('MongoDB connection error:', err));
 
@@ -22,7 +22,7 @@ app.use(cookieParser());
 app.use(cors());
 
 // Routes
-// app.use('/notes', notesRouter);
+app.use('/notes', notesRouter);
 
 // Error handling
 app.use((err, req, res, next) => {
