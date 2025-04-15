@@ -16,6 +16,7 @@ services:
 
   user-service:
     build: ./user-service
+    image: user-service:1.0.0
     container_name: user-service
     restart: always
     depends_on:
@@ -34,6 +35,7 @@ services:
 
   note-service:
     build: ./note-service
+    image: note-service:1.0.0
     container_name: note-service
     restart: always
     depends_on:
@@ -73,17 +75,17 @@ services:
     networks:
       - kong-network
 
-  portal:
-    build:
-      context: ./portal
-    ports:
-      - "80:80"
-    depends_on:
-      - kong
-      - user-service
-      - note-service
-    networks:
-      - kong-network
+  # portal:
+  #   build:
+  #     context: ./portal
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - kong
+  #     - user-service
+  #     - note-service
+  #   networks:
+  #     - kong-network
 
 volumes:
   mongo_data:
