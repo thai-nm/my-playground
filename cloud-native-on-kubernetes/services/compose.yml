@@ -16,7 +16,7 @@ services:
 
   user-service:
     build: ./user-service
-    image: user-service:1.0.0
+    image: localhost/user-service:1.0.0
     container_name: user-service
     restart: always
     depends_on:
@@ -35,7 +35,7 @@ services:
 
   note-service:
     build: ./note-service
-    image: note-service:1.0.0
+    image: localhost/note-service:1.0.0
     container_name: note-service
     restart: always
     depends_on:
