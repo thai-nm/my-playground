@@ -12,4 +12,4 @@ helm repo update
 helm upgrade --install kong kong/ingress -n kong --create-namespace -f ./values.yaml
 
 # Install echo test app
-kubectl apply -f ../manifests/echo-service.yaml
+kubectl apply -f ../services/manifests/echo-service.yaml
