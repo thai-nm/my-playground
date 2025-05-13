@@ -8,6 +8,8 @@ plugin: jwt
 config:
   claims_to_verify:
     - exp
+
+# JWT for User Service
 ---
 apiVersion: v1
 kind: Secret

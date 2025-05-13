@@ -53,7 +53,7 @@ spec:
 apiVersion: gateway.networking.k8s.io/v1
 kind: HTTPRoute
 metadata:
-  name: note-service-route
+  name: note-service-route-private
   annotations:
     konghq.com/plugins: jwt
     konghq.com/strip-path: "true"
