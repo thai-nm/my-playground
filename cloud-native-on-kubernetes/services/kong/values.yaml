@@ -6,7 +6,3 @@ gateway:
     type: ClusterIP
     http:
       enabled: true
-  plugins:
-    configMaps:
-      - name: kong-plugin-jwt
-        pluginName: jwt
