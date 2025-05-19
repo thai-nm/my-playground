@@ -1,0 +1,95 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: always
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: localexample
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    networks:
+      - kong-network
+
+  user-service:
+    build: ./user-service
+    image: localhost/user-service:1.0.0
+    container_name: user-service
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://root:localexample@mongo:27017/
+      - MONGO_HOST=mongo
+      - JWT_ISSUER=note-app-user-service
+      - JWT_SECRET_KEY=EFBF13B3-1D6F-4EF8-95FE-C71784B835F5
+    ports:
+      - "8080:8080"
+    volumes:
+      - ./user-service:/app
+    networks:
+      - kong-network
+
+  note-service:
+    build: ./note-service
+    image: localhost/note-service:1.0.0
+    container_name: note-service
+    restart: always
+    depends_on:
+      - mongo
+    environment:
+      - MONGO_URI=mongodb://root:localexample@mongo:27017
+      - NODE_ENV=production
+      - SERVICE_NAME=note-service
+      - JWT_SECRET=EFBF13B3-1D6F-4EF8-95FE-C71784B835F5
+    command: ["npm", "run", "dev"]
+    ports:
+      - "3000:3000"
+    networks:
+      - kong-network
+
+  kong:
+    image: kong/kong-gateway:3.9-debian
+    container_name: kong
+    restart: always
+    environment:
+      KONG_DATABASE: "off"
+      KONG_PROXY_ACCESS_LOG: "/dev/stdout"
+      KONG_ADMIN_ACCESS_LOG: "/dev/stdout"
+      KONG_PROXY_ERROR_LOG: "/dev/stderr"
+      KONG_ADMIN_ERROR_LOG: "/dev/stderr"
+      KONG_DECLARATIVE_CONFIG: "/usr/local/kong/declarative/kong.yml"
+      KONG_ADMIN_LISTEN: "0.0.0.0:8001"
+      KONG_ADMIN_GUI_URL: "http://localhost:8002"
+    ports:
+      - "8000:8000"
+      - "8443:8443"
+      - "8001:8001"
+      - "8444:8444"
+      - "8002:8002"
+    volumes:
+      - ./kong/kong.yml:/usr/local/kong/declarative/kong.yml
+    networks:
+      - kong-network
+
+  # portal:
+  #   build:
+  #     context: ./portal
+  #   ports:
+  #     - "80:80"
+  #   depends_on:
+  #     - kong
+  #     - user-service
+  #     - note-service
+  #   networks:
+  #     - kong-network
+
+volumes:
+  mongo_data:
+
+networks:
+  kong-network:
+    driver: bridge

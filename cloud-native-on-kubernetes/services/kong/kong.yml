@@ -1,0 +1,64 @@
+_format_version: "3.0"
+_transform: true
+
+services:
+  - name: user-service
+    url: http://user-service:8080
+    routes:
+      - name: public-routes
+        paths:
+          - /user-service/api/public
+        methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+        strip_path: true
+
+      - name: private-routes
+        paths:
+          - /user-service/api/private
+        methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+        plugins:
+          - name: jwt
+            enabled: true
+            config:
+              claims_to_verify:
+                - exp
+        strip_path: true
+  - name: note-service
+    url: http://note-service:3000
+    routes:
+      - name: private
+        paths:
+          - /
+        methods:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+        plugins:
+          - name: jwt
+            enabled: true
+            config:
+              claims_to_verify:
+                - exp
+        strip_path: true
+
+consumers:
+  - username: admin
+  - username: note-app-user-service
+
+jwt_secrets:
+  - consumer: admin
+    algorithm: HS256
+    key: 358A0DC8-B1CD-46EC-B33E-2CBADB51B2DA
+    secret: 9D6DA3B7-5634-4FFB-A9A0-2CA14248A378
+  - consumer: note-app-user-service
+    algorithm: HS256
+    key: note-app-user-service
+    secret: EFBF13B3-1D6F-4EF8-95FE-C71784B835F5

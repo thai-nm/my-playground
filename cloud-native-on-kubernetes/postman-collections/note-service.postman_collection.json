@@ -1,0 +1,194 @@
+{
+	"info": {
+		"_postman_id": "dcdb0513-0967-454b-90ce-6af6dcf00aad",
+		"name": "Note Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15319129"
+	},
+	"item": [
+		{
+			"name": "Create a new user note",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"My First Test Note\",\n    \"content\": \"This is a test note.\\nIt is created when my girlfriend hates me.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gw_host}}:{{gw_port}}/{{gw_service}}/api/notes",
+					"host": [
+						"{{gw_host}}"
+					],
+					"port": "{{gw_port}}",
+					"path": [
+						"{{gw_service}}",
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List all user notes",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{gw_host}}:{{gw_port}}/{{gw_service}}/api/notes",
+					"host": [
+						"{{gw_host}}"
+					],
+					"port": "{{gw_port}}",
+					"path": [
+						"{{gw_service}}",
+						"api",
+						"notes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get an user note",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{gw_host}}:{{gw_port}}/{{gw_service}}/api/notes/{{user_note_id}}",
+					"host": [
+						"{{gw_host}}"
+					],
+					"port": "{{gw_port}}",
+					"path": [
+						"{{gw_service}}",
+						"api",
+						"notes",
+						"{{user_note_id}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update an user note",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"title\": \"Title Is Updated!\",\n    \"content\": \"Now this should have another content.\"\n}\n",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gw_host}}:{{gw_port}}/{{gw_service}}/api/notes/{{user_note_id}}",
+					"host": [
+						"{{gw_host}}"
+					],
+					"port": "{{gw_port}}",
+					"path": [
+						"{{gw_service}}",
+						"api",
+						"notes",
+						"{{user_note_id}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "gw_host",
+			"value": "localhost",
+			"type": "default"
+		},
+		{
+			"key": "gw_port",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "gw_service",
+			"value": "note-service",
+			"type": "default"
+		},
+		{
+			"key": "user_note_id",
+			"value": "67fa523bd991eaad4d68f8ce",
+			"type": "default"
+		}
+	]
+}

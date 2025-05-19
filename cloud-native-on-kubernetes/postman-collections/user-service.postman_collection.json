@@ -1,0 +1,161 @@
+{
+	"info": {
+		"_postman_id": "1e139580-47e9-4e6a-b73c-4ccd07b2adfa",
+		"name": "User Service",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "15319129"
+	},
+	"item": [
+		{
+			"name": "Get user profile",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{JWT}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{gw_host}}:{{gw_port}}/{{gw_service}}/api/private/user/profile",
+					"host": [
+						"{{gw_host}}"
+					],
+					"port": "{{gw_port}}",
+					"path": [
+						"{{gw_service}}",
+						"api",
+						"private",
+						"user",
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register a user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"thainm02\",\n    \"email\": \"thainguyen.uet0@gmail.com\",\n    \"password\": \"1234567\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gw_host}}:{{gw_port}}/{{gw_service}}/api/public/user/register",
+					"host": [
+						"{{gw_host}}"
+					],
+					"port": "{{gw_port}}",
+					"path": [
+						"{{gw_service}}",
+						"api",
+						"public",
+						"user",
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login a user",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"email\": \"thainguyen.uet0@gmail.com\",\n    \"password\": \"1234567\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{gw_host}}:{{gw_port}}/{{gw_service}}/api/public/user/login",
+					"host": [
+						"{{gw_host}}"
+					],
+					"port": "{{gw_port}}",
+					"path": [
+						"{{gw_service}}",
+						"api",
+						"public",
+						"user",
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"variable": [
+		{
+			"key": "port",
+			"value": "8080",
+			"type": "default"
+		},
+		{
+			"key": "service",
+			"value": "user",
+			"type": "default"
+		},
+		{
+			"key": "host",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "gateway_service",
+			"value": "user",
+			"type": "default"
+		},
+		{
+			"key": "gateway_port",
+			"value": "8000",
+			"type": "default"
+		},
+		{
+			"key": "gw_host",
+			"value": "localhost",
+			"type": "default"
+		},
+		{
+			"key": "gw_port",
+			"value": "8000",
+			"type": "default"
+		},
+		{
+			"key": "gw_service",
+			"value": "user",
+			"type": "default"
+		},
+		{
+			"key": "api_type",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "JWT_TOKEN",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRoYWluZ3V5ZW4udWV0MEBnbWFpbC5jb20iLCJleHAiOjE3NDQwNTg5MTF9.197D3iA8CU2FTHxB1Bgza07O4oEI2yLzr0-MEc4HciY",
+			"type": "default"
+		},
+		{
+			"key": "JWT",
+			"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRoYWluZ3V5ZW4udWV0MEBnbWFpbC5jb20iLCJpc3MiOiJub3RlLWFwcC11c2VyLXNlcnZpY2UiLCJleHAiOjE3NDc3NTIyOTJ9.qEXuKy-v6_878GjLljw5gN1yUuZgxRctXGAbQO1ylpw",
+			"type": "default"
+		}
+	]
+}

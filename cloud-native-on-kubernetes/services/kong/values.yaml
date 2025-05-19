@@ -1,0 +1,8 @@
+gateway:
+  proxy:
+    type: ClusterIP
+  admin:
+    enabled: true
+    type: ClusterIP
+    http:
+      enabled: true

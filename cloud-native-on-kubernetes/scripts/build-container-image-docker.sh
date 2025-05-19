@@ -1,0 +1,1 @@
+docker compose -f ../services/compose.yml build note-service user-service
