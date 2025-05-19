@@ -21,8 +21,7 @@ app.use(cookieParser());
 app.use(cors());
 
 // Routes
-app.use(`/${process.env.SERVICE_NAME}/notes`, notesRouter);
-// app.use('/note-service/notes', notesRouter);
+app.use(`/api/notes`, notesRouter);
 
 // Error handling
 app.use((err, req, res, next) => {

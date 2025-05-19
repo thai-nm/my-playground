@@ -29,7 +29,7 @@ spec:
               memory: "256Mi"
           env:
             - name: MONGO_URI
-              value: "mongodb://root:localexample@mongo:27017"
+              value: "mongodb://root:localexample@mongodb:27017"
             - name: NODE_ENV
               value: "production"
             - name: SERVICE_NAME
@@ -64,7 +64,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /notes
+            value: /note-service
       backendRefs:
         - name: note-service
           kind: Service
