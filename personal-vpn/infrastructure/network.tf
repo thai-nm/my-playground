@@ -20,7 +20,7 @@ resource "azurerm_network_security_group" "public" {
   resource_group_name = azurerm_resource_group.psnvpn.name
 }
 
-resource "azurerm_network_security_rule" "allow-inbound-public" {
+resource "azurerm_network_security_rule" "allow-popular-inbound-publ" {
   name                         = "AllowPopularInbound"
   priority                     = 100
   direction                    = "Inbound"
@@ -34,7 +34,7 @@ resource "azurerm_network_security_rule" "allow-inbound-public" {
   network_security_group_name  = azurerm_network_security_group.public.name
 }
 
-resource "azurerm_network_security_rule" "allow-inbound-public" {
+resource "azurerm_network_security_rule" "allow-wg-inbound-publ" {
   name                         = "AllowWireGuardUDPInbound"
   priority                     = 100
   direction                    = "Inbound"
