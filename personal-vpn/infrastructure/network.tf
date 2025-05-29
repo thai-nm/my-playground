@@ -21,7 +21,7 @@ resource "azurerm_network_security_group" "public" {
 }
 
 resource "azurerm_network_security_rule" "allow-inbound-public" {
-  name                         = "OnlyAllowHTTPAndSSHInbound"
+  name                         = "AllowPopularInbound"
   priority                     = 100
   direction                    = "Inbound"
   access                       = "Allow"
@@ -29,7 +29,7 @@ resource "azurerm_network_security_rule" "allow-inbound-public" {
   source_address_prefix        = "*"
   source_port_range            = "*"
   destination_address_prefixes = azurerm_subnet.public.address_prefixes
-  destination_port_ranges      = ["80", "22"]
+  destination_port_ranges      = ["22", "80", "443"]
   resource_group_name          = azurerm_resource_group.psnvpn.name
   network_security_group_name  = azurerm_network_security_group.public.name
 }
