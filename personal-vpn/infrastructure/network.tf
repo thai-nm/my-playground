@@ -20,20 +20,6 @@ resource "azurerm_network_security_group" "public" {
   resource_group_name = azurerm_resource_group.psnvpn.name
 }
 
-resource "azurerm_network_security_rule" "allow-popular-inbound-publ" {
-  name                         = "AllowPopularInbound"
-  priority                     = 100
-  direction                    = "Inbound"
-  access                       = "Allow"
-  protocol                     = "Tcp"
-  source_address_prefix        = "*"
-  source_port_range            = "*"
-  destination_address_prefixes = azurerm_subnet.public.address_prefixes
-  destination_port_ranges      = ["22", "80", "443"]
-  resource_group_name          = azurerm_resource_group.psnvpn.name
-  network_security_group_name  = azurerm_network_security_group.public.name
-}
-
 resource "azurerm_network_security_rule" "allow-wg-inbound-publ" {
   name                         = "AllowWireGuardUDPInbound"
   priority                     = 100
@@ -44,6 +30,20 @@ resource "azurerm_network_security_rule" "allow-wg-inbound-publ" {
   source_port_range            = "*"
   destination_address_prefixes = azurerm_subnet.public.address_prefixes
   destination_port_ranges      = ["51820"]
+  resource_group_name          = azurerm_resource_group.psnvpn.name
+  network_security_group_name  = azurerm_network_security_group.public.name
+}
+
+resource "azurerm_network_security_rule" "allow-popular-inbound-publ" {
+  name                         = "AllowPopularInbound"
+  priority                     = 101
+  direction                    = "Inbound"
+  access                       = "Allow"
+  protocol                     = "Tcp"
+  source_address_prefix        = "*"
+  source_port_range            = "*"
+  destination_address_prefixes = azurerm_subnet.public.address_prefixes
+  destination_port_ranges      = ["22", "80", "443"]
   resource_group_name          = azurerm_resource_group.psnvpn.name
   network_security_group_name  = azurerm_network_security_group.public.name
 }
