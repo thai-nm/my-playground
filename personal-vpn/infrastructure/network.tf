@@ -34,6 +34,20 @@ resource "azurerm_network_security_rule" "allow-inbound-public" {
   network_security_group_name  = azurerm_network_security_group.public.name
 }
 
+resource "azurerm_network_security_rule" "allow-inbound-public" {
+  name                         = "AllowWireGuardUDPInbound"
+  priority                     = 100
+  direction                    = "Inbound"
+  access                       = "Allow"
+  protocol                     = "Udp"
+  source_address_prefix        = "*"
+  source_port_range            = "*"
+  destination_address_prefixes = azurerm_subnet.public.address_prefixes
+  destination_port_ranges      = ["51820"]
+  resource_group_name          = azurerm_resource_group.psnvpn.name
+  network_security_group_name  = azurerm_network_security_group.public.name
+}
+
 resource "azurerm_subnet_network_security_group_association" "public" {
   subnet_id                 = azurerm_subnet.public.id
   network_security_group_id = azurerm_network_security_group.public.id
