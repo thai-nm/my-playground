@@ -9,6 +9,8 @@ resource "azurerm_network_interface" "vpn-server" {
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.vpn-server.id
   }
+
+  ip_forwarding_enabled = true
 }
 
 resource "azurerm_linux_virtual_machine" "vpn-server" {
