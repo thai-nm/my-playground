@@ -28,7 +28,7 @@ resource "azurerm_network_security_rule" "allow-inbound-public" {
   protocol                     = "Tcp"
   source_address_prefix        = "*"
   source_port_range            = "*"
-  destination_address_prefixes = azurerm_subnet.private.address_prefixes
+  destination_address_prefixes = azurerm_subnet.public.address_prefixes
   destination_port_ranges      = ["80", "22"]
   resource_group_name          = azurerm_resource_group.psnvpn.name
   network_security_group_name  = azurerm_network_security_group.public.name

@@ -5,7 +5,7 @@ resource "azurerm_network_interface" "vpn-server" {
 
   ip_configuration {
     name                          = "internal"
-    subnet_id                     = azurerm_subnet.private.id
+    subnet_id                     = azurerm_subnet.public.id
     private_ip_address_allocation = "Dynamic"
     public_ip_address_id          = azurerm_public_ip.vpn-server.id
   }
