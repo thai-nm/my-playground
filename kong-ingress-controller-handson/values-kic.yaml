@@ -1,0 +1,41 @@
+controller:
+  ingressController:
+    enabled: true
+    env:
+      GATEWAY_API_CONTROLLER_NAME: "konghq.com/kic-handson"
+    ingressClass: kong-handson
+    gatewayDiscovery:
+      enabled: true
+    resources:
+      limits:
+        cpu: 512m
+        memory: 256Mi
+      requests:
+        cpu: 256m
+        memory: 128Mi
+    adminApi:
+      tls:
+        client:
+          enabled: false
+
+gateway:
+  autoscaling:
+    enabled: true
+    env:
+      CONTROLLER_GATEWAY_API_CONTROLLER_NAME: "konghq.com/kic-gateway-controller-internal"
+      log_level: error
+  resources:
+    limits:
+      cpu: 1024m
+      memory: 1024Mi
+    requests:
+      cpu: 512m
+      memory: 512Mi
+  proxy:
+    type: LoadBalancer
+    http:
+      enabled: true
+  admin:
+    enabled: true
+  manager:
+    enabled: true
