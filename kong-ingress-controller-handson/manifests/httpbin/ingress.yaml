@@ -1,0 +1,20 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: httpbin-ingress
+  namespace: kong-test
+  annotations:
+    kubernetes.io/ingress.class: kong
+    konghq.com/plugins: jwt-auth-plugin
+spec:
+  rules:
+    - host: httpbin.local
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: httpbin-service
+                port:
+                  number: 80

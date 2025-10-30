@@ -22,7 +22,7 @@ gateway:
   autoscaling:
     enabled: true
     env:
-      CONTROLLER_GATEWAY_API_CONTROLLER_NAME: "konghq.com/kic-gateway-controller-internal"
+      CONTROLLER_GATEWAY_API_CONTROLLER_NAME: "konghq.com/kic-handson"
       log_level: error
   resources:
     limits:
