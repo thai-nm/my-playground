@@ -37,5 +37,7 @@ gateway:
       enabled: true
   admin:
     enabled: true
+    http:
+      enabled: true
   manager:
     enabled: true
