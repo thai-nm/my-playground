@@ -1,5 +1,7 @@
 #! /bin/bash
 
+# Prerequisite: hey - https://github.com/rakyll/hey
+
 TARGET_URL=$1
 
 # Load test using hey
