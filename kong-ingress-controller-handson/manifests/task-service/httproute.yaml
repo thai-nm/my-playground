@@ -13,7 +13,7 @@ spec:
     - matches:
         - path:
             type: PathPrefix
-            value: /tasks
+            value: /task
       backendRefs:
         - name: task-service
           kind: Service

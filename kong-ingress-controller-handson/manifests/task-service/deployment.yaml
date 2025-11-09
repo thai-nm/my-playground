@@ -18,6 +18,7 @@ spec:
     spec:
       containers:
         - image: nmthai/sample-task-service:latest
+          imagePullPolicy: Always
           name: task-service
           ports:
             - containerPort: 8080
