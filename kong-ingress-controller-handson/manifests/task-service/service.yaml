@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: task-service
+  name: task-service
+  namespace: kic-dev
+spec:
+  ports:
+    - port: 8080
+      name: tcp
+      protocol: TCP
+      targetPort: 8080
+  selector:
+    app: task-service
