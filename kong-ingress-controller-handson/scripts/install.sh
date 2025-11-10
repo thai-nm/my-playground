@@ -11,3 +11,6 @@ kubectl apply -f ../manifests/echo-service/
 
 # Apply task service manifests
 kubectl apply -f ../manifests/task-service/
+
+# Apply Kong resources manifests
+kubectl apply -f ../manifests/kong-resources/

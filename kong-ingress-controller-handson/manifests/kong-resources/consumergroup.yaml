@@ -1,0 +1,15 @@
+apiVersion: configuration.konghq.com/v1beta1
+kind: KongConsumerGroup
+metadata:
+  name: developer
+  namespace: kong
+  annotations:
+    kubernetes.io/ingress.class: kong
+---
+apiVersion: configuration.konghq.com/v1beta1
+kind: KongConsumerGroup
+metadata:
+  name: contractor
+  namespace: kong
+  annotations:
+    kubernetes.io/ingress.class: kong
