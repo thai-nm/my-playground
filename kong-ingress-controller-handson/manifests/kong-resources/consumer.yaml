@@ -6,6 +6,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
 username: lucas
+consumerGroups:
+  - developer
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
@@ -15,6 +17,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
 username: anna
+consumerGroups:
+  - developer
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
@@ -24,6 +28,8 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
 username: alex
+consumerGroups:
+  - contractor
 ---
 apiVersion: configuration.konghq.com/v1
 kind: KongConsumer
@@ -33,3 +39,5 @@ metadata:
   annotations:
     kubernetes.io/ingress.class: kong
 username: henry
+consumerGroups:
+  - contractor
